@@ -28,7 +28,7 @@
                 <img src="https://source.unsplash.com/500x200?{{ $post->category->name }}" class="card-img-top" alt="{{ $post->category->name }}">
                     <div class="card-body">
                         <h5 class="card-title"><a href="/portofolio/{{ $post->slug }}" class="text-decoration-none text-dark">{{ $post->title }}</a></h5>
-                        <h7>By <a href="/authors/{{ $post->author->username }}" class="text-decoration-none">{{ $post->author->name }}</a></h7>
+                        <h7>By <a href="/authors/{{ $post->author->username }}" class="text-decoration-none">{{ $post->author->name }}</a> - <a href="/categories/{{ $post->category->name }}" class="text-decoration-none">{{ $post->category->name   }}</a></h7>
                         <p class="card-text"><small class="text-body-secondary">Last updated {{ $post->created_at->diffForHumans() }}</small></p>
                         <p class="card-text">{{ $post->excerpt }}</p>
                         <a href="/portofolio/{{ $post->slug }}" class="btn btn-primary">Read more</a>
