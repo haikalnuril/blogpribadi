@@ -9,11 +9,12 @@ use App\Models\post;
 class PostController extends Controller
 {
     public function index(){
+
         return view('posts',[
             "title" => "All Portofolio",
             "active" => "Portofolio",
             // "posts" => post::all()
-            "posts" => post::latest()->get()
+            "posts" => Post::latest()->filter(request(['search', 'category']))->get()
         ]);
     }
 
