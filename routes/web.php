@@ -76,3 +76,4 @@ route::get('/authors/{author:username}', function(User $author){
 route::get('/login', [LoginController::class, 'index']);
 
 route::get('/register', [RegisterController::class, 'index']);
+route::post('/register', [RegisterController::class, 'store']);
