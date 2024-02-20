@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\DashboardController;
 use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
@@ -73,7 +73,19 @@ route::get('/authors/{author:username}', function(User $author){
 });
 
 
-route::get('/login', [LoginController::class, 'index']);
+route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+route::post('/login', [LoginController::class, 'authenticate']);
+route::post('/logout', [LoginController::class, 'logout']);
 
-route::get('/register', [RegisterController::class, 'index']);
+
+route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 route::post('/register', [RegisterController::class, 'store']);
+
+route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+route::get('/dashboard', function(){
+    return view('dashboard/index',[
+        'title'=> 'Dashboard',
+        'active'=> 'dashboard'
+
+    ]);
+})->middleware('auth');
