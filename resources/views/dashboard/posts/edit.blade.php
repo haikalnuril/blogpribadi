@@ -6,7 +6,7 @@
       </div>
 
     <div class="col-lg-8">
-        <form method="post" action="/dashboard/posts/{{ $post->slug }}" class="mb-5">
+        <form method="post" action="/dashboard/posts/{{ $post->slug }}" class="mb-5" enctype="multipart/form-data">
             @method('put')
             @csrf
             <div class="mb-3">
@@ -44,6 +44,22 @@
             </div>
 
             <div class="mb-3">
+                <label for="image" class="form-label">Post Image</label>
+                <input type="hidden" name="oldImage" value="{{ $post->image }}">
+                @if ($post->image)
+                    <img src="{{ asset('storage/'.$post->image) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block" id="frame">
+                @else
+                    <img class="img-preview img-fluid mb-3 col-sm-5 d-block" id="frame">
+                @endif
+                <input class="form-control @error('image') is-invalid @enderror" type="file" id="iamge" name="image" onchange="preview()">
+            @error('image')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+            </div>
+
+            <div class="mb-3">
                 <label for="body" class="form-label">Body</label>
                 <input id="body" type="hidden" name="body" class="@error('body') is-invalid @enderror" value="{{ old('body', $post->body) }}">
                 <trix-editor input="body"></trix-editor>
@@ -72,5 +88,9 @@
         document.addEventListener('trix-file-accept', function(e){
             e.preventDefault();
         })
+
+        function preview(){
+            frame.src= URL.createObjectURL(event.target.files[0]);
+        }
     </script>
 @endsection
